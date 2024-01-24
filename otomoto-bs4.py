@@ -34,7 +34,7 @@ offers = []
 
 i = 0
 
-for article in articles[:6]:
+for article in articles:
     i+=1
     picture = article.find("img")
     if picture is None:
@@ -45,36 +45,30 @@ for article in articles[:6]:
         art.picture = picture['src']
 
 
-    h1_title = article.find('h1')
-    if h1_title is None:
-        pass
-    else:
+        h1_title = article.find('h1')
+        if h1_title is None:
+            pass
+        else:
 
-        art.link = h1_title.a['href']
-        art.title = h1_title.text
+            art.link = h1_title.a['href']
+            art.title = h1_title.text
 
-    h3_price = article.find('h3')
-    if h3_price is None:
-        pass
-    else:
+            h3_price = article.find('h3')
+            art.price = h3_price.text
 
-        art.price = h3_price.text
+            dl_tag = article.find_all('dl')
+            for num, tag in enumerate(dl_tag):
+                if num == 0:
+                    dd = tag.find_all('dd')
 
-    dl_tag = article.find_all('dl')
-    if dl_tag is None:
-        pass
-    else:
-        for num, tag in enumerate(dl_tag):
-            if num == 0:
-                dd = tag.find_all('dd')
+                    art.mileage, art.fuel, art.gearbox, art.production_year= [dd_tag.text for dd_tag in dd]
 
-                art.mileage, art.fuel, art.gearbox, art.production_year= [dd_tag.text for dd_tag in dd]
+                else:
+                    dd = tag.find_all('dd')
+                    art.city,_ = [dd_tag.text for dd_tag in dd]
 
-            else:
-                dd = tag.find_all('dd')
-                art.city,_ = [dd_tag.text for dd_tag in dd]
-    offers.append(art)
-
+                # print('#######')
+            offers.append(art)
 
 for offer in offers:
     print(offer.title)
