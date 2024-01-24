@@ -4,17 +4,25 @@ from otomoto_cls.otomoto_classes import Article
 
 
 def find_article_tags(url) -> list:
-    response = requests.get(url).text
-    soup = bs4(response, 'html.parser')
+    try:
+        response = requests.get(url).text
+        soup = bs4(response, 'html.parser')
 
-    articles = soup.find_all('article')
-    return articles
+        articles = soup.find_all('article')
+        return articles
+
+    except :
+        print('Internet connection failure')
+        return []
 
 
 def scrape_from_page(url) -> list[Article]:
+
+    articles = find_article_tags(url)
+
     offers = []
     i = 0
-    for article in find_article_tags(url):
+    for article in articles:
         i += 1
         picture = article.find("img")
         if picture is None:
@@ -48,3 +56,12 @@ def scrape_from_page(url) -> list[Article]:
 
                 offers.append(art)
     return offers
+
+
+def export_to_csv(fname: str, article_objs: list[Article]):
+    count = len(article_objs)
+    with open(f'{fname}_{count}_ofert.csv', mode='w', encoding='utf8') as f:
+        f.write('title,price,picture,mileage,fuel,gearbox,production_year,city,link\n')
+        for article_obj in article_objs:
+            f.write(
+                f"{article_obj.title},{article_obj.price},{article_obj.picture},{article_obj.mileage},{article_obj.fuel},{article_obj.gearbox},{article_obj.production_year},{article_obj.city},{article_obj.link}\n")
