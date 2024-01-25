@@ -1,24 +1,20 @@
-import requests
-from bs4 import BeautifulSoup as bs4
-from otomoto_cls.otomoto_classes import Article
+from otomoto_cls.otomoto_classes import Article, Soup
 
 
-def find_article_tags(url) -> list:
+def find_article_tags(bsoup) -> list:
     try:
-        response = requests.get(url).text
-        soup = bs4(response, 'html.parser')
 
-        articles = soup.find_all('article')
+        articles = bsoup.find_all('article')
+
         return articles
 
-    except :
+    except:
         print('Internet connection failure')
         return []
 
 
-def scrape_from_page(url) -> list[Article]:
-
-    articles = find_article_tags(url)
+def scrape_from_page(BeautifulSoup: Soup) -> list[Article]:
+    articles = find_article_tags(BeautifulSoup.make_soup)
 
     offers = []
     i = 0
