@@ -22,8 +22,8 @@ class Article:
 class SetURL:
     def __init__(self, page=1):
         self.price_low, self.price_high = 15000, 40000
-        self.year_from, self.year_to = 2007, 2018
-        self.make, self.model = 'ford', 'mondeo'
+        self.year_from, self.year_to = 2010, 2014
+        self.make, self.model = 'toyota', 'avensis'
         self.page = str(page)
 
     @property
@@ -45,3 +45,6 @@ class Soup:
         main = self.make_soup.find('main')
         ul_tags = main.find_all('li', attrs={'data-testid': "pagination-list-item", 'class': 'pagination-item'})
         return len(ul_tags) + 1
+
+
+

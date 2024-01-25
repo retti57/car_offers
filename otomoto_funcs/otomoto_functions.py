@@ -1,3 +1,4 @@
+import os
 from otomoto_cls.otomoto_classes import Article, Soup
 
 
@@ -55,9 +56,20 @@ def scrape_from_page(BeautifulSoup: Soup) -> list[Article]:
 
 
 def export_to_csv(fname: str, article_objs: list[Article]):
+    _change_directory_to_oferty()
+
     count = len(article_objs)
     with open(f'{fname}_{count}_ofert.csv', mode='w', encoding='utf8') as f:
         f.write('title,price,picture,mileage,fuel,gearbox,production_year,city,link\n')
         for article_obj in article_objs:
             f.write(
                 f"{article_obj.title},{article_obj.price},{article_obj.picture},{article_obj.mileage},{article_obj.fuel},{article_obj.gearbox},{article_obj.production_year},{article_obj.city},{article_obj.link}\n")
+
+
+def _change_directory_to_oferty():
+    os.chdir(r'D:\Projekty\otomoto\otomoto')
+    if not os.path.exists('oferty'):
+        os.mkdir('oferty')
+
+    os.chdir(r'D:\Projekty\otomoto\otomoto\oferty')
+

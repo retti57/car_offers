@@ -5,7 +5,7 @@ if __name__ == '__main__':
     search_for_pages = SetURL()
     soup_for_pages = Soup(search_for_pages.url)
     pages = soup_for_pages.get_pages()
-    for page in range(1,pages):
+    for page in range(1, pages):
         try:
 
             search = SetURL(page)
@@ -17,4 +17,3 @@ if __name__ == '__main__':
             export_to_csv(f'{page}-{search.make}-{search.model}', offers)
         except ConnectionError:
             print('Connection failure')
-
