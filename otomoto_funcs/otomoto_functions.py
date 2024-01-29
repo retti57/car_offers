@@ -1,4 +1,7 @@
 import os
+import datetime
+from pathlib import Path
+
 from otomoto_cls.otomoto_classes import Article, Soup
 
 
@@ -56,10 +59,12 @@ def scrape_from_page(BeautifulSoup: Soup) -> list[Article]:
 
 
 def export_to_csv(fname: str, article_objs: list[Article]):
+    today = datetime.datetime.today().date()
     _change_directory_to_oferty()
-
     count = len(article_objs)
-    with open(f'{fname}_{count}_ofert.csv', mode='w', encoding='utf8') as f:
+    output_name = f'{today}_{fname}_{count}_ofert'
+
+    with open(f'{output_name}_ofert.csv', mode='w', encoding='utf8') as f:
         f.write('title,price,picture,mileage,fuel,gearbox,production_year,city,link\n')
         for article_obj in article_objs:
             f.write(
@@ -67,9 +72,10 @@ def export_to_csv(fname: str, article_objs: list[Article]):
 
 
 def _change_directory_to_oferty():
-    os.chdir(r'D:\Projekty\otomoto\otomoto')
-    if not os.path.exists('oferty'):
-        os.mkdir('oferty')
+    if not os.getcwd().endswith('oferty'):
+        folder = Path('oferty')
+        if not folder.exists():
+            folder.mkdir(exist_ok=False)
+        os.chdir(folder)
 
-    os.chdir(r'D:\Projekty\otomoto\otomoto\oferty')
 

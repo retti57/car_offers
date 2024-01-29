@@ -28,7 +28,7 @@ class SetURL:
 
     @property
     def url(self):
-        return f"https://www.otomoto.pl/osobowe/{self.make}/{self.model}/seg-sedan/od-{self.year_from}?search%5Bfilter_enum_fuel_type%5D=petrol&search%5Bfilter_float_price%3Afrom%5D={self.price_low}&search%5Bfilter_float_price%3Ato%5D={self.price_high}&search%5Bfilter_float_year%3Ato%5D={self.year_to}&page={self.page}&search%5Badvanced_search_expanded%5D=true"
+        return f"https://www.otomoto.pl/osobowe/{self.make}/{self.model}/seg-sedan/od-{self.year_from}?search%5Bfilter_enum_damaged%5D=0&search%5Bfilter_enum_fuel_type%5D=petrol&search%5Bfilter_float_price%3Afrom%5D={self.price_low}&search%5Bfilter_float_price%3Ato%5D={self.price_high}&search%5Bfilter_float_year%3Ato%5D={self.year_to}&page={self.page}&search%5Badvanced_search_expanded%5D=true"
 
 
 class Soup:
